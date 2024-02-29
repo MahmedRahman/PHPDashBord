@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('vacation_days')->default(0); 
             $table->string('employee_no')->default("0");
             $table->string('department_id')->nullable(); 
+            $table->string('job_titles_id')->nullable(); 
             $table->date('join_date')->nullable(); 
             $table->enum('role', ['admin', 'employee', 'hr', 'techlead'])->default('employee');
             $table->rememberToken();

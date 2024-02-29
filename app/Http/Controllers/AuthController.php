@@ -77,14 +77,14 @@ class AuthController extends Controller
     }
 
     
-    public function listUsers()
+    public function index()
     {
         try {
            // $users = User::all();
            
            $users = User::where('role', '!=', 'admin')->get();
-
-            return ResponseHelper::makeResponse('Operation successful', new UserCollection($users));
+//new UserCollection() new UserCollection($users) //$users
+            return ResponseHelper::makeResponse('Operation successful', new UserCollection($users)   );
         } catch (\Exception $e) {
             return ResponseHelper::makeResponse('', $e->getMessage(), true, 400);
         }
@@ -92,7 +92,7 @@ class AuthController extends Controller
 
     }
 
-    public function addUser(Request $request)
+    public function store(Request $request)
     {
         try {
             $validatedData = $request->validate([
@@ -103,13 +103,12 @@ class AuthController extends Controller
                 'is_active' => 'boolean' ,
                 'vacation_days' => 'required|integer|between:1,40',
                 'join_date' => 'required|date_format:Y-m-d',
-                'department'=> 'required|string|in:Engineering,Sales and Marketing,Human Resources',
-                'job_title'=> 'required|string|in:Front-end Developer,Back-end Developer,Mobile Developer,UX/UI Designer,HR Manager,Operations Manager',
                 'employee_no' => 'required|string|max:255',
+                'department_id' => 'required|string|max:255',
+                'job_titles_id' => 'required|string|max:255',
             ]);
 
            
-
             $user = User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
@@ -118,9 +117,9 @@ class AuthController extends Controller
                 'is_active' =>  $validatedData['is_active'] ,
                 'vacation_days' => $validatedData['vacation_days'],
                 'join_date' => $validatedData['join_date'], 
-                'department' => $validatedData['department'],
-                'job_title' => $validatedData['job_title'],
                 'employee_no' => $validatedData['employee_no'],// Sets the join date to the current date
+                'department_id' => $validatedData['department_id'], 
+                'job_titles_id' => $validatedData['job_titles_id'], 
             ]);
 
             $token = $user->createToken('web-token')->plainTextToken;
@@ -140,7 +139,7 @@ class AuthController extends Controller
 
     }
 
-    public function showUser($id)
+    public function show($id)
     {
        
         try {
@@ -161,7 +160,7 @@ class AuthController extends Controller
 
     }
 
-    public function deleteUser($id)
+    public function delete($id)
     {
 
         try {
@@ -186,7 +185,7 @@ class AuthController extends Controller
 
     }
 
-    public function updateUser(Request $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $validatedData = $request->validate([

@@ -11,9 +11,9 @@ class JobTitleController extends Controller
 {
     public function index(){
         try {
-            $deparment = job_title::all();
+            $jobTitle = job_title::all();
             
-             return ResponseHelper::makeResponse('Operation successful', $deparment);
+             return ResponseHelper::makeResponse('Operation successful', $jobTitle);
          } catch (\Exception $e) {
              return ResponseHelper::makeResponse('', $e->getMessage(), true, 400);
          }
@@ -26,12 +26,12 @@ class JobTitleController extends Controller
                 'title' => 'required|string|max:255',
             ]);
 
-            $department = job_title::create([
+            $jobTitle = job_title::create([
                 'departments_id' => $validatedData['departments_id'],
                 'title' => $validatedData['title'],
             ]);
           
-            return ResponseHelper::makeResponse('Operation successful', $department );
+            return ResponseHelper::makeResponse('Operation successful', $jobTitle );
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             $errors = $e->errors();
@@ -43,4 +43,25 @@ class JobTitleController extends Controller
         }
 
     }
+
+    public function delete($id)
+    {
+
+        try {
+            $jobTitle = job_title::find($id);
+            if (!$jobTitle) {
+                throw new \Exception('Department Id Not Found');
+            }
+
+             $jobTitle->delete();
+            return ResponseHelper::makeResponse("Department deleted successfully", []);
+
+        } catch (\Exception $e) {
+            return ResponseHelper::makeResponse($e->getMessage(), [], true, 400);
+        }
+
+
+
+    }
+
 }

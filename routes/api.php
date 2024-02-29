@@ -12,16 +12,12 @@ use Illuminate\Support\Facades\Route;
 Route::post("login",[AuthController::class,"login"]);
 Route::post("register",[AuthController::class,"registerNewEmployee"]);
 
-
 Route::middleware('auth:sanctum')->group(function () {
-
-    Route::post("/user/add",[AuthController::class,"addUser"]);
-    Route::put('/user/{id}', [AuthController::class, 'updateUser']);
-    Route::delete('/user/{id}', [AuthController::class, 'deleteUser']);
-    Route::get('/user/{id}', [AuthController::class, 'showUser']);
-    Route::get('/users', [AuthController::class, 'listUsers']);
-   
-  
+    Route::get('/users', [AuthController::class, 'index']);
+    Route::post("/user/add",[AuthController::class,"store"]);
+    Route::put('/user/{id}', [AuthController::class, 'update']);
+    Route::delete('/user/{id}', [AuthController::class, 'delete']);
+    Route::get('/user/{id}', [AuthController::class, 'show']);
 });
 
 Route::get('/departments', [DepartmentController::class, 'index']);
@@ -29,7 +25,7 @@ Route::post("/departments/add",[DepartmentController::class,"store"]);
 Route::delete('/departments/{id}', [DepartmentController::class, 'delete']);
 
 
-
 Route::get('/job_titles', [JobTitleController::class, 'index']);
 Route::post("/job_titles/add",[JobTitleController::class,"store"]);
+Route::delete('/job_titles/{id}', [JobTitleController::class, 'delete']);
 

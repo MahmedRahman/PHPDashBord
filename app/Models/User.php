@@ -21,6 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -28,7 +29,9 @@ class User extends Authenticatable
         'vacation_days',
         'join_date',
         'is_active',
-        'department_id'
+        'department_id',
+        'job_titles_id',
+        'employee_no',
     ];
 
     /**
@@ -60,6 +63,11 @@ class User extends Authenticatable
     {
         // Assuming 'department_id' is the foreign key in the 'users' table
         return $this->belongsTo(Department::class, 'department_id');
+    }
+
+
+    public function job_titles(): BelongsTo{
+        return $this->belongsTo(job_title::class,'job_titles_id');
     }
 
 }

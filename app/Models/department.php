@@ -12,6 +12,7 @@ class department extends Model
     use HasFactory;
 
     protected $fillable = [
+
         'title',
     ];
 
@@ -21,10 +22,9 @@ class department extends Model
         'updated_at',
     ];
 
-
+// This will use 'department_id' in the 'users' table to find related users
 // Department has many Users
 public function users(): HasMany {
-    // This will use 'department_id' in the 'users' table to find related users
     return $this->hasMany(User::class, 'department_id');
 }
 

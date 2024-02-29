@@ -25,6 +25,8 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'department_id' => $this->department->id,
             'department_value' => $this->department->title,
+            'job_titles_id' => $this->job_titles_id,
+            'job_titles_value'=> $this->job_titles?->title, // Fixed typo here
         ];
     }
 }
