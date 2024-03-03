@@ -23,6 +23,10 @@ class DepartmentController extends Controller
 
     public function store(Request $request){
         try {
+            $user = auth()->user();
+            if ($user->role === 'employee') {
+                throw new Exception("cannot access Users data");
+            }
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
             ]);
@@ -39,7 +43,7 @@ class DepartmentController extends Controller
             $firstErrorMessage = reset($firstError); 
             return ResponseHelper::makeResponse($firstErrorMessage, [], true, 400);
         } catch (Exception $e) {
-            return ResponseHelper::makeResponse($e,[] , true, 400);
+            return ResponseHelper::makeResponse($e->getMessage(),[] , true, 400);
         }
 
     }
@@ -49,6 +53,10 @@ class DepartmentController extends Controller
     {
 
         try {
+            $user = auth()->user();
+            if ($user->role === 'employee') {
+                throw new Exception("cannot access Users data");
+            }
             $department = department::find($id);
             if (!$department) {
                 throw new \Exception('Department Id Not Found');

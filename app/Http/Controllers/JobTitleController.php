@@ -21,6 +21,10 @@ class JobTitleController extends Controller
 
     public function store(Request $request){
         try {
+            $user = auth()->user();
+            if ($user->role === 'employee') {
+                throw new Exception("cannot access Users data");
+            }
             $validatedData = $request->validate([
                 'departments_id' => 'required|string|max:255',
                 'title' => 'required|string|max:255',
@@ -39,7 +43,7 @@ class JobTitleController extends Controller
             $firstErrorMessage = reset($firstError); 
             return ResponseHelper::makeResponse($firstErrorMessage, [], true, 400);
         } catch (Exception $e) {
-            return ResponseHelper::makeResponse($e,[] , true, 400);
+            return ResponseHelper::makeResponse($e->getMessage(),[] , true, 400);
         }
 
     }
@@ -48,13 +52,17 @@ class JobTitleController extends Controller
     {
 
         try {
+            $user = auth()->user();
+            if ($user->role === 'employee') {
+                throw new Exception("cannot access Users data");
+            }
             $jobTitle = job_title::find($id);
             if (!$jobTitle) {
-                throw new \Exception('Department Id Not Found');
+                throw new \Exception('job Title Not Found');
             }
 
              $jobTitle->delete();
-            return ResponseHelper::makeResponse("Department deleted successfully", []);
+            return ResponseHelper::makeResponse("job Title deleted successfully", []);
 
         } catch (\Exception $e) {
             return ResponseHelper::makeResponse($e->getMessage(), [], true, 400);

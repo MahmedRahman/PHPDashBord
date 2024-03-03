@@ -5,6 +5,8 @@
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 namespace Database\Seeders;
+
+use App\Models\Setting;
 use Illuminate\Support\Str;
 
 use Illuminate\Database\Seeder;
@@ -26,6 +28,16 @@ class DatabaseSeeder extends Seeder
             JobTitleSeeder::class
         ]);
 
+        
+        Setting::create([
+            'key' => 'site_title',
+            'value' => 'My Awesome Website'
+        ]);
+
+        //$setting = Setting::where('key', 'site_title')->first();
+        // if ($setting) {
+        //     $setting->update(['value' => 'My Even More Awesome Website']);
+        // }
 
     }
 }

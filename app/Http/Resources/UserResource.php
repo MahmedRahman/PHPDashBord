@@ -23,10 +23,12 @@ class UserResource extends JsonResource
             'vacation_days' => (string)$this->vacation_days, 
             'join_date' => $this->join_date,
             'role' => $this->role,
-            'department_id' => $this->department->id,
-            'department_value' => $this->department->title,
+            'department_id' => $this->department?->id,
+            'department_value' => $this->department?->title,
             'job_titles_id' => $this->job_titles_id,
-            'job_titles_value'=> $this->job_titles?->title, // Fixed typo here
+            'job_titles_value'=> $this->job_title?->title, 
+            'vacation' => $this->vacation,
+            'Excuse' => $this->Excuse,
         ];
     }
 }
