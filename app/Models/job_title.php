@@ -21,4 +21,8 @@ class job_title extends Model
     public function users(): HasMany {
         return $this->hasMany(User::class, 'job_titles_id');
     }
+
+    public function department() {
+        return $this->hasOne(department::class,'id','departments_id');
+    }
 }

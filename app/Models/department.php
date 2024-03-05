@@ -22,6 +22,8 @@ class department extends Model
         'updated_at',
     ];
 
-
+    public function jobTitles(){
+        return $this->hasMany(job_title::class, 'departments_id', 'id');
+    }
 
 }

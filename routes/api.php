@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "registerNewEmployee"]);
-
+Route::get('/departments', [DepartmentController::class, 'index']);
+Route::get('/job_titles', [JobTitleController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/users', [userController::class, 'index']);
@@ -21,11 +22,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/{id}', [userController::class, 'update']);
 
 
-    Route::get('/departments', [DepartmentController::class, 'index']);
+    
     Route::post("/departments/add", [DepartmentController::class, "store"]);
     Route::delete('/departments/{id}', [DepartmentController::class, 'delete']);
 
-    Route::get('/job_titles', [JobTitleController::class, 'index']);
+   
     Route::post("/job_titles/add", [JobTitleController::class, "store"]);
     Route::delete('/job_titles/{id}', [JobTitleController::class, 'delete']);
 
@@ -38,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
    
     Route::get('/excuses', [ExcuseController::class, 'index']);
     Route::get('/excuses/{id}', [ExcuseController::class, 'show']);
-    Route::post('/excuses', [ExcuseController::class, 'store']);
+    Route::post('/excuses/add', [ExcuseController::class, 'store']);
     Route::put('/excuses/{id}', [ExcuseController::class, 'update']);
     Route::delete('/excuses/{id}', [ExcuseController::class, 'delete']);
 

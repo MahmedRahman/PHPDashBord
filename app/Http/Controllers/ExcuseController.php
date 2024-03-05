@@ -36,7 +36,7 @@ class ExcuseController extends Controller
             'comments' => $validatedData['comments'] ?? null,
         ]);
     
-        return ResponseHelper::makeResponse('Operation successful',ExcuseCollection::collection($excuse));
+        return ResponseHelper::makeResponse('Operation successful',$excuse);
 
     }
 

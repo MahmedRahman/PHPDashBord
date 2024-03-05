@@ -23,7 +23,8 @@ class VacationResource extends JsonResource
             'type' => $this->type,
             'state' => $this->state,
             'comments' => $this->comments,
-            //'user_id' => $this->user_id,
+            'user_id' => $this->user_id,
+            'user_name' => $this->user?->name,
             'user' => $this->user , // Assuming you have a UserResource
         ];
     }

@@ -16,7 +16,6 @@ use function PHPUnit\Framework\returnSelf;
 class userController extends Controller
 {
 
-
     public function index()
     {
 
@@ -29,7 +28,7 @@ class userController extends Controller
             }
 
             $users = User::where('role', '!=', 'admin')->get();
-            return ResponseHelper::makeResponse('Operation successful', new UserCollection($users));
+            return ResponseHelper::makeResponse('Operation successful', UserResource::collection($users) );
 
             //  return ResponseHelper::makeResponse('Operation successful', new UserCollection($users));
         } catch (\Exception $e) {
@@ -92,7 +91,6 @@ class userController extends Controller
 
     }
 
-
     public function delete($id)
     {
 
@@ -140,7 +138,7 @@ class userController extends Controller
                 'vacation_days' => 'nullable|integer|between:1,40',
                 'join_date' => 'nullable|date_format:Y-m-d',
                 'department_id' => 'nullable|integer',
-                'job_title' => 'nullable|string',
+                'job_titles_id' => 'nullable|integer',
                 'employee_no' => 'nullable|string',
             ]);
 
@@ -163,4 +161,5 @@ class userController extends Controller
         }
 
     }
+    
 }

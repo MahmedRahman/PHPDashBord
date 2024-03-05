@@ -7,6 +7,7 @@ use App\Models\department;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceResponse;
 use App\Helpers\ResponseHelper;
+use App\Http\Resources\DepartmentResource;
 
 class DepartmentController extends Controller
 {
@@ -15,7 +16,7 @@ class DepartmentController extends Controller
     public function index(){
         try {
             $deparment = department::all();
-             return ResponseHelper::makeResponse('Operation successful', $deparment);
+             return ResponseHelper::makeResponse('Operation successful', DepartmentResource::collection($deparment) );
          } catch (\Exception $e) {
              return ResponseHelper::makeResponse('', $e->getMessage(), true, 400);
          }

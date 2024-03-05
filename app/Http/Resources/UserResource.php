@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'emp_no' => (int)$this->employee_no,
             'name' => $this->name,
             'email' => $this->email,
-            'is_active' => (string)(bool)$this->is_active,
+            'is_active' => (bool)$this->is_active,
             'vacation_days' => (string)$this->vacation_days, 
             'join_date' => $this->join_date,
             'role' => $this->role,

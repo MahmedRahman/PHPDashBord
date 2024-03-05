@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Resources\JobTitleResource;
 use App\Models\job_title;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class JobTitleController extends Controller
         try {
             $jobTitle = job_title::all();
             
-             return ResponseHelper::makeResponse('Operation successful', $jobTitle);
+             return ResponseHelper::makeResponse('Operation successful', JobTitleResource::collection($jobTitle) );
          } catch (\Exception $e) {
              return ResponseHelper::makeResponse('', $e->getMessage(), true, 400);
          }

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ExcuseResource extends JsonResource
+class JobTitleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,10 @@ class ExcuseResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_name' => $this->user?->name,
-            'create_date' => $this->create_date,
-            'stating' => $this->stating,
-            'ending' => $this->ending,
-            'state' => $this->state,
-            'comments' => $this->comments,
-            'user' => $this->user,
+            'title' => $this->title,
+            //'department_id' => $this->departments_id,
+            'department' => $this->department?->title,
+            // You might have more attributes or relationships you want to include
         ];
     }
 }
