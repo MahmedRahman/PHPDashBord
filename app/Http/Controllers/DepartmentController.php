@@ -63,6 +63,11 @@ class DepartmentController extends Controller
                 throw new \Exception('Department Id Not Found');
             }
 
+
+            if($department->employees->count()) {
+                throw new \Exception('This Department has some employees. Please remove them first.');
+            }
+
              $department->delete();
             return ResponseHelper::makeResponse("Department deleted successfully", []);
 

@@ -13,9 +13,9 @@ class ExcuseController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-        if ($user->role === 'admin') {
-            return response()->json(['message' => 'Admin users cannot create excuses.'], 403);
-        }
+        // if ($user->role === 'admin') {
+        //     return response()->json(['message' => 'Admin users cannot create excuses.'], 403);
+        // }
 
         $validatedData = $request->validate([
             'create_date' => 'required|date',
@@ -65,11 +65,7 @@ class ExcuseController extends Controller
         }
 
         $validatedData = $request->validate([
-            'create_date' => 'required|date',
-            'stating' => 'nullable|string',
-            'ending' => 'nullable|string',
             'state' => 'required|string|in:approval,rejection,wait_for_reply',
-            'user_id' => 'nullable|string',
             'comments' => 'nullable|string',
         ]);
 

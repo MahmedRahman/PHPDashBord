@@ -23,12 +23,12 @@ class userController extends Controller
         try {
             $user = auth()->user();
 
-            if ($user->role === 'employee') {
-                throw new Exception("cannot access Users data");
-            }
+            // if ($user->role === 'employee') {
+            //     throw new Exception("cannot access Users data");
+            // }
 
-            $users = User::where('role', '!=', 'admin')->get();
-            return ResponseHelper::makeResponse('Operation successful', UserResource::collection($users) );
+            $users = User::where('role', '=', 'employee')->get();
+            return ResponseHelper::makeResponse('Operation successful', UserResource::collection($users));
 
             //  return ResponseHelper::makeResponse('Operation successful', new UserCollection($users));
         } catch (\Exception $e) {
@@ -42,10 +42,10 @@ class userController extends Controller
     {
         try {
             $user = auth()->user();
-            if ($user->role === 'employee') {
+            // if ($user->role === 'employee') {
 
-                throw new Exception("cannot access Users data");
-            }
+            //     throw new Exception("cannot access Users data");
+            // }
 
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
@@ -55,7 +55,7 @@ class userController extends Controller
                 'is_active' => 'boolean',
                 'vacation_days' => 'required|integer|between:1,40',
                 'join_date' => 'required|date_format:Y-m-d',
-                'employee_no' => 'required|string|max:255',
+                'employee_no' => 'required|string|max:255|unique:users',
                 'department_id' => 'required|string|max:255',
                 'job_titles_id' => 'required|string|max:255',
             ]);
@@ -105,7 +105,14 @@ class userController extends Controller
                 throw new \Exception('User Id Not Found');
             }
 
+            if ($user->vacation->count()) {
+                throw new \Exception('This User has some vacation. Please remove them first.');
+            }
 
+            if ($user->Excuse->count()) {
+                throw new \Exception('This User has some Excuse. Please remove them first.');
+            }
+            
             if ($user["role"] !== "employee") {
                 throw new \Exception('We Can Only Delete Employee Users');
             }
@@ -161,5 +168,5 @@ class userController extends Controller
         }
 
     }
-    
+
 }

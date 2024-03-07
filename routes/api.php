@@ -14,9 +14,10 @@ Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "registerNewEmployee"]);
 Route::get('/departments', [DepartmentController::class, 'index']);
 Route::get('/job_titles', [JobTitleController::class, 'index']);
+Route::get('/users', [userController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
     
-    Route::get('/users', [userController::class, 'index']);
+  
     Route::post("/user/add", [userController::class, "store"]);
     Route::delete('/user/{id}', [userController::class, 'delete']);
     Route::put('/user/{id}', [userController::class, 'update']);

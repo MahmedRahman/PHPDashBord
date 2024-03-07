@@ -36,30 +36,33 @@ class vacationController extends Controller
         try {
 
             $user = auth()->user();
-            if ($user->role === 'admin') {
-                return response()->json(['message' => 'Admin users cannot create vacation requests.'], 403);
+            if ($user->role === 'employee') {
+                $validatedData['user_id']  = $user->id;
+               // return response()->json(['message' => 'Admin users cannot create vacation requests.'], 403);
             }
 
+            //?? $user->id
+
             $validatedData = $request->validate([
-                'create_date' => 'required|date',
+               // 'create_date' => 'required|date',
                 'stating' => 'required|date',
                 'ending' => 'required|date',
                 'days' => 'required|integer',
                 'type' => 'required|string|in:annual,emergency,sick,without_pay',
-                'state' => 'required|string|in:approval,rejection,wait_for_reply',
+                //'state' => 'required|string|in:approval,rejection,wait_for_reply',
                 'user_id' => 'nullable|integer', // Assuming user_id should be an integer, and nullable
                 'comments' => 'nullable|string|max:255',
             ]);
 
             // Create the new vacation record
             $vacationRequest = Vacation::create([
-                'create_date' => $validatedData['create_date'],
+                //'create_date' => $validatedData['create_date'],
                 'stating' => $validatedData['stating'],
                 'ending' => $validatedData['ending'],
                 'days' => $validatedData['days'],
                 'type' => $validatedData['type'],
-                'state' => $validatedData['state'],
-                'user_id' => $validatedData['user_id'] ?? $user->id,
+                //'state' => $validatedData['state'],
+                'user_id' => $validatedData['user_id'] ,
                 'comments' => $validatedData['comments'] ?? null, // Use null if comments are not provided
             ]);
 
@@ -104,9 +107,9 @@ class vacationController extends Controller
 
 
             $user = auth()->user();
-            if ($user->role !== 'admin') {
-                return response()->json(['message' => 'Only Admin users can update vacation requests.'], 403);
-            }
+            // if ($user->role !== 'admin') {
+            //     return response()->json(['message' => 'Only Admin users can update vacation requests.'], 403);
+            // }
 
 
             // Validate the incoming request data

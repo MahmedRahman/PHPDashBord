@@ -18,6 +18,7 @@ class DepartmentResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'jobTitle' => $this->jobTitles,
+           
             // You might have more attributes or relationships you want to include
         ];
     }
